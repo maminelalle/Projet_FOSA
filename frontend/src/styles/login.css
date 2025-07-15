@@ -1,0 +1,140 @@
+/* src/styles/Login.css */
+
+:root {
+  --primary: #2c3e8f; /* Bleu plus foncé */
+  --primary-hover: #1e2b6b;
+  --text-color: #333333;
+  --light-gray: #f5f5f5;
+  --border-color: #ddd;
+  --error-color: #e74c3c; /* Rouge pour mot de passe oublié */
+  --link-color: #3498db;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--light-gray);
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+}
+
+.login-header {
+  margin-bottom: 30px;
+}
+
+.login-header h1 {
+  color: var(--primary);
+  font-size: 1.5rem; /* Taille réduite pour "Rapport" */
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.login-header p {
+  color: var(--text-color);
+  font-size: 0.9rem;
+}
+
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: all 0.3s;
+  background-color: #f9f9f9;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(44, 62, 143, 0.2);
+}
+
+.forgot-password {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.forgot-password a {
+  color: var(--error-color);
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.forgot-password a:hover {
+  text-decoration: underline;
+}
+
+.login-button {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 20px;
+}
+
+.login-button:hover {
+  background-color: var(--primary-hover);
+}
+
+.login-button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.login-footer {
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.login-footer a {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+.error-message {
+  color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
