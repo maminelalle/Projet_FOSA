@@ -8,6 +8,7 @@ import Home from './components/Home'; // Importez le composant Home
 import FosaList from './components/FosaList';
 import MapView from './components/MapView';
 import FosaForm from './components/FosaForm';
+import FosaHistoryList from './components/FosaHistoryList';
 
 function AppContent() {
   const location = useLocation();
@@ -40,6 +41,11 @@ function AppContent() {
         <Route path="/add-fosa" element={
           <Dashboard>
             <FosaForm />
+          </Dashboard>
+        } />
+        <Route path="/fosaHistory" element={
+          <Dashboard>
+            <FosaHistoryList />
           </Dashboard>
         } />
       </Routes>

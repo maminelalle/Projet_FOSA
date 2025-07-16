@@ -69,8 +69,8 @@ function Login() {
         username,
         password
       });
-      localStorage.setItem('access_token', res.data.access);
-      localStorage.setItem('refresh_token', res.data.refresh);
+      localStorage.setItem('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUyNjI3NTA1LCJpYXQiOjE3NTI2MjcyMDUsImp0aSI6Ijc3ZjBiNjQwN2ZjMTQ0MTdiZjlhMDMxN2I3ZWU0NjFhIiwidXNlcl9pZCI6MX0.NC39tjlFR9ko2TistXi2fkmqy4Pyllc2xrMHB9q694Q', res.data.access);
+      localStorage.setItem('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MjcxMzYwNSwiaWF0IjoxNzUyNjI3MjA1LCJqdGkiOiI2YzQ2YWU4Mjk4OGE0ZTFjYTZhOTgzMjZlNzA4YWRjMCIsInVzZXJfaWQiOjF9.ruPPjNAYO4svzUsJFoDzsiUPhpjVk868COBHK6SL3cE', res.data.refresh);
       navigate('/home');
     } catch (err) {
       console.error(err);

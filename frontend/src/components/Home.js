@@ -1,8 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import API from '../services/api';
 import '../styles/home.css';
 
 const Home = () => {
+  const [stats, setStats] = useState({
+    totalFosas: 0,
+    progression: 0,
+    couverture: 0,
+    repartition: {
+      HP: 0,
+      CS: 0,
+      PS: 0,
+      DRS: 0,
+      DAF: 0,
+    },
+  });
+
+  const [history, setHistory] = useState([]);
+
+  useEffect(() => {
+    fetchStats();
+    fetchHistory();
+  }, []);
+
+  const fetchStats = async () => {
+    try {
+      const res = await API.get('fosas/');
+      const total = res.data.length;
+
+      // Compter par type
+      const repartition = { HP: 0, CS: 0, PS: 0, DRS: 0, DAF: 0 };
+      res.data.forEach(fosa => {
+        if (fosa.type) repartition[fosa.type] += 1;
+      });
+
+      // Exemple statiques pour couverture/progression
+      const couverture = Math.min(98, total / 20); // fictif
+      const progression = total; // fictif
+
+      setStats({
+        totalFosas: total,
+        progression,
+        couverture,
+        repartition,
+      });
+    } catch (err) {
+      console.error("Erreur de chargement des stats:", err);
+    }
+  };
+
+  const fetchHistory = async () => {
+    try {
+      const res = await API.get('history/');
+      setHistory(res.data.slice(0, 5)); // Prendre les 5 dernières actions
+    } catch (err) {
+      console.error("Erreur de chargement de l'historique:", err);
+    }
+  };
+
   return (
     <div className="dashboard">
       <header className="top-bar">
@@ -31,9 +87,9 @@ const Home = () => {
                 <i className="fas fa-hospital"></i>
               </div>
               <div className="stat-info">
-                <h3>Nouvelles FOSA</h3>
-                <span className="value">78%</span>
-                <span className="trend positive">+14</span>
+                <h3>Total FOSA</h3>
+                <span className="value">{stats.totalFosas}</span>
+                <span className="trend positive">+{stats.totalFosas}</span>
               </div>
             </div>
             <div className="stat-card">
@@ -42,7 +98,7 @@ const Home = () => {
               </div>
               <div className="stat-info">
                 <h3>Progression</h3>
-                <span className="value">1896</span>
+                <span className="value">{stats.progression}</span>
                 <span className="trend">Total</span>
               </div>
             </div>
@@ -52,8 +108,8 @@ const Home = () => {
               </div>
               <div className="stat-info">
                 <h3>Couverture</h3>
-                <span className="value">98%</span>
-                <span className="trend positive">+2%</span>
+                <span className="value">{stats.couverture}%</span>
+                <span className="trend positive">+{stats.couverture}%</span>
               </div>
             </div>
           </div>
@@ -64,46 +120,35 @@ const Home = () => {
             <div className="card-header">
               <h2>Répartition des FOSA</h2>
               <div className="time-filter">
-                <button className="active">2023</button>
-                <button>2022</button>
-                <button>2021</button>
+                <button className="active">2025</button>
               </div>
             </div>
             <div className="chart">
-              <div className="bar" style={{ height: '35%' }}><span>Hôpitaux</span></div>
-              <div className="bar active" style={{ height: '45%' }}><span>Centres Santé</span></div>
-              <div className="bar" style={{ height: '15%' }}><span>Postes Santé</span></div>
-              <div className="bar" style={{ height: '5%' }}><span>Pharmacies</span></div>
+              <div className="bar" style={{ height: `${stats.repartition.HP}%` }}><span>Hôpitaux</span></div>
+              <div className="bar active" style={{ height: `${stats.repartition.CS}%` }}><span>Centres Santé</span></div>
+              <div className="bar" style={{ height: `${stats.repartition.PS}%` }}><span>Postes Santé</span></div>
+              <div className="bar" style={{ height: `${stats.repartition.DRS}%` }}><span>DRS</span></div>
+              <div className="bar" style={{ height: `${stats.repartition.DAF}%` }}><span>DAF</span></div>
             </div>
           </div>
 
           <div className="card upcoming-tasks">
             <div className="card-header">
               <h2>Dernières Actions</h2>
-              <button className="add-task"><i className="fas fa-plus"></i></button>
             </div>
             <ul className="task-list">
-              <li className="task-item priority-high">
-                <div className="task-info">
-                  <h3>Mise à jour des données</h3>
-                  <p>Actualisation des FOSA de Nouakchott</p>
-                </div>
-                <span className="due-time">Aujourd'hui</span>
-              </li>
-              <li className="task-item priority-medium">
-                <div className="task-info">
-                  <h3>Rapport trimestriel</h3>
-                  <p>Préparation pour le ministère</p>
-                </div>
-                <span className="due-time">Demain</span>
-              </li>
-              <li className="task-item priority-low">
-                <div className="task-info">
-                  <h3>Maintenance serveur</h3>
-                  <p>Mise à jour de sécurité</p>
-                </div>
-                <span className="due-time">15/12</span>
-              </li>
+              {history.map(item => (
+                <li
+                  key={item.id}
+                  className={`task-item priority-${item.action === 'UPDATE' ? 'medium' : 'high'}`}
+                >
+                  <div className="task-info">
+                    <h3>{item.action} par {item.username || 'Système'}</h3>
+                    <p>{item.fosa_nom_fr} ({item.fosa_nom_ar || '-'})</p>
+                  </div>
+                  <span className="due-time">{new Date(item.timestamp).toLocaleDateString()}</span>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -140,7 +185,6 @@ const Home = () => {
               <li><Link to="/agency">L'Agence</Link></li>
             </ul>
           </div>
-
           <div className="footer-section">
             <h4>Suivez-nous sur</h4>
             <div className="social-links">
@@ -150,14 +194,12 @@ const Home = () => {
               <a href="#"><i className="fas fa-envelope"></i></a>
             </div>
           </div>
-
           <div className="footer-section">
             <div className="footer-logo">
               <h3>REPUBLIQUE ISLAMIQUE DE MAURITANIE</h3>
               <p>Nombre : Fraternité Justice</p>
             </div>
           </div>
-
           <div className="footer-section">
             <div className="footer-address">
               <h4>Nombre de la Transformation et Modernisation de l'Administration</h4>
@@ -167,7 +209,6 @@ const Home = () => {
             </div>
           </div>
         </div>
-
         <div className="footer-bottom">
           <p>Agence Numérique de l'état. Tous droits réservés 2025©</p>
         </div>

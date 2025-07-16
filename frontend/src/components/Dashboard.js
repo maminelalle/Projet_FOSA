@@ -19,6 +19,7 @@ const Dashboard = ({ children }) => {
     else if (path.includes('/fosas')) setActiveButton('fosas');
     else if (path.includes('/map')) setActiveButton('map');
     else if (path.includes('/add-fosa')) setActiveButton('add-fosa');
+    else if (path.includes('/fosaHistory')) setActiveButton('fosaHistory');
   }, [location]);
 
   useEffect(() => {
@@ -52,7 +53,8 @@ const Dashboard = ({ children }) => {
     { id: 'home', path: '/home', icon: '📊', label: 'Tableau de bord' },
     { id: 'fosas', path: '/fosas', icon: '🏥', label: 'Liste des FOSA' },
     { id: 'map', path: '/map', icon: '🗺️', label: 'Carte interactive' },
-    { id: 'add-fosa', path: '/add-fosa', icon: '➕', label: 'Ajouter FOSA' }
+    { id: 'add-fosa', path: '/add-fosa', icon: '➕', label: 'Ajouter FOSA' },
+    { id: 'fosaHistory', path: '/fosaHistory', icon: '🔄', label: 'Historique des modifications' }
   ];
 
   return (
