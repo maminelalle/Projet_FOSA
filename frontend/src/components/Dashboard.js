@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+import LanguageContext from '../context/LanguageContext';
 import '../styles/dashboard.css';
 
 const Dashboard = ({ children }) => {
@@ -11,9 +12,9 @@ const Dashboard = ({ children }) => {
   const username = localStorage.getItem('username') || 'Admin';
   const navigate = useNavigate();
   const location = useLocation();
+  const { lang, toggleLang } = useContext(LanguageContext);
 
   useEffect(() => {
-    // Détermine le bouton actif en fonction de l'URL
     const path = location.pathname;
     if (path.includes('/home')) setActiveButton('home');
     else if (path.includes('/fosas')) setActiveButton('fosas');
@@ -33,6 +34,18 @@ const Dashboard = ({ children }) => {
     }
   }, [searchTerm]);
 
+  // Bloquer bouton "précédent" navigateur pour empêcher retour après logout
+  useEffect(() => {
+    window.history.pushState(null, document.title, window.location.href);
+    const onPopState = () => {
+      window.history.pushState(null, document.title, window.location.href);
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => {
+      window.removeEventListener('popstate', onPopState);
+    };
+  }, []);
+
   const searchFosas = async () => {
     try {
       const response = await axios.get(`http://127.0.0.1:8000/api/fosas/?search=${searchTerm}`);
@@ -43,23 +56,23 @@ const Dashboard = ({ children }) => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    // Remplace ici les clés par celles que tu utilises dans localStorage pour stocker tes tokens
+    localStorage.removeItem('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzUyNjI3NTA1LCJpYXQiOjE3NTI2MjcyMDUsImp0aSI6Ijc3ZjBiNjQwN2ZjMTQ0MTdiZjlhMDMxN2I3ZWU0NjFhIiwidXNlcl9pZCI6MX0.NC39tjlFR9ko2TistXi2fkmqy4Pyllc2xrMHB9q694Q');
+    localStorage.removeItem('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc1MjcxMzYwNSwiaWF0IjoxNzUyNjI3MjA1LCJqdGkiOiI2YzQ2YWU4Mjk4OGE0ZTFjYTZhOTgzMjZlNzA4YWRjMCIsInVzZXJfaWQiOjF9.ruPPjNAYO4svzUsJFoDzsiUPhpjVk868COBHK6SL3cE');
     localStorage.removeItem('username');
     navigate('/login');
   };
 
   const navButtons = [
-    { id: 'home', path: '/home', icon: '📊', label: 'Tableau de bord' },
-    { id: 'fosas', path: '/fosas', icon: '🏥', label: 'Liste des FOSA' },
-    { id: 'map', path: '/map', icon: '🗺️', label: 'Carte interactive' },
-    { id: 'add-fosa', path: '/add-fosa', icon: '➕', label: 'Ajouter FOSA' },
-    { id: 'fosaHistory', path: '/fosaHistory', icon: '🔄', label: 'Historique des modifications' }
+    { id: 'home', path: '/home', icon: '📊', label: lang === 'fr' ? 'Tableau de bord' : 'لوحة القيادة' },
+    { id: 'fosas', path: '/fosas', icon: '🏥', label: lang === 'fr' ? 'Liste des FOSA' : 'قائمة FOSA' },
+    { id: 'map', path: '/map', icon: '🗺️', label: lang === 'fr' ? 'Carte interactive' : 'خريطة تفاعلية' },
+    { id: 'add-fosa', path: '/add-fosa', icon: '➕', label: lang === 'fr' ? 'Ajouter FOSA' : 'إضافة FOSA' },
+    { id: 'fosaHistory', path: '/fosaHistory', icon: '🔄', label: lang === 'fr' ? 'Historique des modifications' : 'سجل التعديلات' }
   ];
 
   return (
     <div className="dashboard-container">
-      {/* Navbar */}
       <header className="dashboard-header">
         <div className="header-left">
           <button 
@@ -74,23 +87,27 @@ const Dashboard = ({ children }) => {
             </svg>
             <input
               type="text"
-              placeholder="Rechercher une FOSA..."
+              placeholder={lang === 'fr' ? "Rechercher une FOSA..." : "ابحث عن FOSA..."}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
         </div>
         <div className="user-section">
+          <button 
+            onClick={toggleLang} 
+            className="language-toggle"
+          >
+            {lang === 'fr' ? 'العربية' : 'Français'}
+          </button>
           <span className="username">👤 {username}</span>
           <button onClick={handleLogout} className="logout-btn">
-            Déconnexion
+            {lang === 'fr' ? 'Déconnexion' : 'تسجيل خروج'}
           </button>
         </div>
       </header>
 
-      {/* Main Content */}
       <div className="dashboard-main">
-        {/* Sidebar */}
         <aside className={`dashboard-sidebar ${isMenuOpen ? 'open' : ''}`}>
           <nav>
             {navButtons.map((button) => (
@@ -107,17 +124,16 @@ const Dashboard = ({ children }) => {
           </nav>
         </aside>
 
-        {/* Content Area */}
         <main className="dashboard-content">
           {searchResults.length > 0 ? (
             <div className="search-results">
-              <h3>Résultats de recherche ({searchResults.length})</h3>
+              <h3>{lang === 'fr' ? 'Résultats de recherche' : 'نتائج البحث'} ({searchResults.length})</h3>
               <div className="results-grid">
                 {searchResults.map(fosa => (
                   <div key={fosa.id} className="fosa-card">
-                    <h4>{fosa.nom}</h4>
-                    <p>Type: {fosa.type}</p>
-                    <p>Adresse: {fosa.adresse}</p>
+                    <h4>{lang === 'fr' ? fosa.nom_fr : fosa.nom_ar}</h4>
+                    <p>{lang === 'fr' ? 'Type:' : 'نوع:'} {fosa.type}</p>
+                    <p>{lang === 'fr' ? 'Adresse:' : 'عنوان:'} {fosa.adresse}</p>
                   </div>
                 ))}
               </div>

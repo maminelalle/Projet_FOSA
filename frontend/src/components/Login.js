@@ -121,9 +121,14 @@ function Login() {
             </button>
           </form>
 
-          <div className="login-footer">
-            <p>Pas de compte? <a href="/register">Créer un compte</a></p>
-          </div>
+<div className="login-footer">
+  <p>
+    Pas de compte?{' '}
+    <a href="http://127.0.0.1:8000/api/auth/register/" target="_blank" rel="noopener noreferrer">
+      Créer un compte
+    </a>
+  </p>
+</div>
         </div>
       </div>
     </div>

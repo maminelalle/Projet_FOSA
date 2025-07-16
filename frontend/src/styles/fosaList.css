@@ -1,4 +1,4 @@
-:root {
+:root { 
   --primary: #4361ee;
   --primary-light: #edf2ff;
   --danger: #e63946;
@@ -17,9 +17,9 @@
 
 .fosa-list-container {
   padding: 1rem;
-  max-width: 1000px;
+  max-width: 900px; /* réduit un peu */
   margin: 0 auto;
-  font-size: 0.85rem;
+  font-size: 0.82rem; /* légèrement plus petit */
 }
 
 .list-header {
@@ -38,7 +38,7 @@
 }
 
 .list-header h1 {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   color: var(--dark);
   margin: 0;
   font-weight: 600;
@@ -48,15 +48,15 @@
   background: var(--primary);
   color: white;
   border: none;
-  padding: 0.6rem 1.2rem;
+  padding: 0.55rem 1.1rem;
   border-radius: var(--radius-sm);
   cursor: pointer;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   transition: all 0.2s;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
 }
 
 .add-button:hover {
@@ -66,15 +66,15 @@
 
 .import-export-buttons {
   display: flex;
-  gap: 0.75rem;
+  gap: 0.7rem;
 }
 
 .import-export-buttons button {
-  padding: 0.5rem 0.9rem;
+  padding: 0.45rem 0.8rem;
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -97,16 +97,17 @@
   transform: translateY(-1px);
 }
 
+/* === BARRE DE RECHERCHE sur une ligne === */
 .search-bar {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .search-bar input {
   width: 100%;
-  padding: 0.6rem 1rem;
+  padding: 0.55rem 1rem;
   border: 1px solid var(--light-gray);
   border-radius: var(--radius-md);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   transition: all 0.2s;
   box-shadow: var(--shadow-sm);
 }
@@ -117,6 +118,56 @@
   box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
 }
 
+/* === FILTRES sous la barre de recherche, sur une nouvelle ligne === */
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.filter-input {
+  flex: 1 1 100%; /* barre recherche en full width, mais ici on réduit à 100% sur mobile */
+  padding: 0.5rem 0.8rem;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease;
+  display: none; /* on la cache ici car elle est déjà dans .search-bar */
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+.filter-select,
+.map-filter-select {
+  padding: 0.4rem 0.65rem;
+  border: 1px solid var(--light-gray);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  background: var(--white);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease;
+  min-width: 140px;
+}
+
+.filter-select:hover,
+.map-filter-select:hover,
+.filter-select:focus,
+.map-filter-select:focus {
+  border-color: var(--primary);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+}
+
+/* === TABLE === */
 .table-container {
   background: var(--white);
   border-radius: var(--radius-md);
@@ -127,7 +178,7 @@
 table {
   width: 100%;
   border-collapse: collapse;
-  min-width: 1000px;
+  min-width: 900px; /* réduit un peu */
 }
 
 thead {
@@ -136,18 +187,19 @@ thead {
 }
 
 th {
-  padding: 0.75rem;
+  padding: 0.65rem;
   text-align: left;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
 }
 
 td {
-  padding: 0.75rem;
+  padding: 0.6rem;
   border-bottom: 1px solid var(--light-gray);
   vertical-align: middle;
+  font-size: 0.78rem;
 }
 
 tbody tr:last-child td {
@@ -160,9 +212,9 @@ tbody tr:hover {
 
 .type-badge {
   display: inline-block;
-  padding: 0.35rem 0.75rem;
+  padding: 0.3rem 0.6rem;
   border-radius: 50px;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 600;
   text-align: center;
   text-transform: capitalize;
@@ -185,23 +237,23 @@ tbody tr:hover {
   color: #6b21a8;
 }
 
-/* ✅ BOUTONS ACTIONS : dynamiques & réduits */
+/* === BOUTONS ACTIONS === */
 .actions {
   display: flex;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .actions button {
-  padding: 0.3rem 0.6rem;
+  padding: 0.25rem 0.5rem;
   border: none;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 500;
   transition: all 0.2s ease-in-out;
   display: flex;
   align-items: center;
-  gap: 0.2rem;
+  gap: 0.15rem;
 }
 
 .actions button:hover {
@@ -224,7 +276,7 @@ tbody tr:hover {
   transform: translateY(0);
 }
 
-/* ✅ Style pour le formulaire d'édition */
+/* === FORMULAIRE D'EDIT (plus compact, aligné, petits inputs) === */
 .editing-row {
   background: var(--primary-light);
 }
@@ -234,38 +286,40 @@ tbody tr:hover {
 }
 
 .edit-form {
-  padding: 1.5rem;
-  width: 100%;
-}
-
-.form-row {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 1rem;
+  background: var(--white);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  font-size: 0.85rem;
+  justify-content: center; /* centrage contenu */
 }
 
 .form-group {
-  margin-bottom: 0.5rem;
+  flex: 1 1 180px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.4rem;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
-  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
   color: var(--dark);
+  font-size: 0.82rem;
 }
 
 .form-group input,
 .form-group select {
-  width: 100%;
-  padding: 0.6rem 0.8rem;
+  padding: 0.4rem 0.6rem;
   border: 1px solid var(--light-gray);
   border-radius: var(--radius-sm);
-  font-size: 0.9rem;
-  background: var(--white);
   box-shadow: var(--shadow-sm);
+  font-size: 0.85rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-width: 140px;
 }
 
 .form-group input:focus,
@@ -275,58 +329,86 @@ tbody tr:hover {
   box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
 }
 
+/* BOUTONS ANNULER / ENREGISTRER CENTRÉS */
 .form-actions {
+  flex-basis: 100%;
   display: flex;
-  justify-content: flex-end;
-  gap: 1rem;
-  margin-top: 1.5rem;
+  justify-content: center; /* centrage horizontal */
+  gap: 1.2rem;
+  margin-top: 1rem;
   padding-top: 1rem;
   border-top: 1px solid var(--light-gray);
+}
+
+.cancel-btn,
+.save-btn {
+  padding: 0.5rem 1.2rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  font-size: 0.85rem;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .cancel-btn {
   background: var(--gray);
   color: var(--white);
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
+}
+
+.cancel-btn:hover {
+  background: #5a6268;
+  box-shadow: var(--shadow-sm);
 }
 
 .save-btn {
   background: var(--primary);
   color: var(--white);
-  padding: 0.6rem 1.2rem;
-  border: none;
-  border-radius: var(--radius-sm);
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
 }
 
-.cancel-btn:hover,
 .save-btn:hover {
-  transform: translateY(-1px);
+  background: #365adf;
   box-shadow: var(--shadow-sm);
 }
 
-.cancel-btn:active,
-.save-btn:active {
-  transform: translateY(0);
+/* === BOUTONS VISIBILITÉ === */
+.public-btn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  cursor: pointer;
 }
 
-/* ✅ Responsive */
+.private-btn {
+  background: #f59e0b;
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.public-btn:hover,
+.private-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
   .fosa-list-container {
     padding: 0.75rem;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
+    max-width: 100%;
   }
   
-  .form-row {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+  .form-group {
+    flex: 1 1 100%;
+    min-width: unset;
   }
   
   .list-header {
@@ -344,29 +426,35 @@ tbody tr:hover {
   }
 
   .actions button {
-    padding: 0.3rem 0.5rem;
-    font-size: 0.7rem;
+    padding: 0.25rem 0.45rem;
+    font-size: 0.65rem;
+  }
+  
+  /* Filtre en colonne sous la barre recherche */
+  .filters-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .filter-select {
+    min-width: 100% !important;
   }
 }
 
-/* ✅ Messages */
-.message {
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 4px;
-  background: #e3f2fd;
-  color: #1976d2;
+@media (max-width: 600px) {
+  .edit-form {
+    flex-direction: column;
+  }
+  
+  .form-actions {
+    justify-content: center;
+  }
+  
+  .form-group {
+    flex: 1 1 100%;
+  }
 }
 
-.message.error {
-  background: #ffebee;
-  color: #d32f2f;
-}
-
-.message.success {
-  background: #e8f5e9;
-  color: #388e3c;
-}
 
 .import-export {
   display: flex;
@@ -390,4 +478,26 @@ tbody tr:hover {
 .import-export button:disabled {
   background: #cccccc;
   cursor: not-allowed;
+}
+
+
+.add-fosa-button {
+  background-color: #4caf50; /* vert similaire au bouton public */
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-right: 0.75rem;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.add-fosa-button:hover {
+  background-color: #388e3c;
+  transform: translateY(-1px);
 }

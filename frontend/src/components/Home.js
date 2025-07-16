@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../services/api';
 import '../styles/home.css';
+import useBlockBackButton from '../hooks/useBlockBackButton';
 
 const Home = () => {
+  useBlockBackButton();
   const [stats, setStats] = useState({
     totalFosas: 0,
     progression: 0,

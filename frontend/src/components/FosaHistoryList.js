@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import API from '../services/api';
 import '../styles/fosaHistory.css';
+import useBlockBackButton from '../hooks/useBlockBackButton';
 
 function FosaHistoryList() {
+  useBlockBackButton();
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
